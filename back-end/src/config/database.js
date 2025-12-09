@@ -37,4 +37,6 @@ export async function setupDatabase() {
     
     console.log('Tabela Usuários criada!');
 
+    // inserir um administrador inicialmente
+
 }

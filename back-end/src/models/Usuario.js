@@ -9,3 +9,9 @@ export async function createUser(email, senhaHash) {
     );
     return { id: result.lastID, email };
 }
+
+export async function findUserByEmail(email) {
+    const db = await openDb();
+    // Precisamos buscar a senha para comparar depois
+    return await db.get('SELECT * FROM usuarios WHERE email = ?', email);
+}

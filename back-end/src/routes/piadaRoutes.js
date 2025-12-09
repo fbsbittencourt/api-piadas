@@ -3,6 +3,9 @@ import {
     submeterPiada, buscarPiadaAleatoria,
     listarPiadasPendentes, aprovarPiada
 } from '../controllers/piadaController.js';
+// 1. Importe o middleware
+import authMiddleware from '../middlewares/authMiddleware.js'; 
+
 
 const router = Router();
 
@@ -13,7 +16,7 @@ router.post('/piadas', submeterPiada);
 router.get('/piadas', buscarPiadaAleatoria);
 
 // Rotas de Admin (Por enquanto abertas)
-router.get('/piadas/pendentes', listarPiadasPendentes);
-router.put('/piadas/:id/aprovar', aprovarPiada); // PUT indica atualização
+router.get('/piadas/pendentes', authMiddleware, listarPiadasPendentes);
+router.put('/piadas/:id/aprovar', authMiddleware, aprovarPiada); // PUT indica atualização
 
 export default router;
