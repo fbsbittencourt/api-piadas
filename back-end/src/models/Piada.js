@@ -39,6 +39,24 @@ export async function getPiadaAleatoria() {
     return piada;
 }
 
+export async function getDezPiadasAleatorias() {
+    const db = await openDb();
+
+    // 1. SELECT: Seleciona os campos id, pergunta e resposta
+    // 2. FROM piadas: Da tabela piadas
+    // 3. WHERE aprovada = 1: Apenas as que já foram moderadas!
+    // 4. ORDER BY RANDOM(): Embaralha tudo
+    // 5. LIMIT 1: Pega só uma
+    const piada = await db.all(
+        `
+            SELECT id, pergunta, resposta
+            FROM piadas WHERE aprovada = 1 ORDER BY RANDOM() LIMIT 10
+         `
+    );
+
+    return piada;
+}
+
 // 1. Lista apenas as piadas que ainda NÃO foram moderadas
 export async function getPiadasPendentes() {
     const db = await openDb();

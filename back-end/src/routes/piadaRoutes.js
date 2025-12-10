@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import {
     submeterPiada, buscarPiadaAleatoria,
-    listarPiadasPendentes, aprovarPiada
+    listarPiadasPendentes, aprovarPiada,
+    buscarDezPiadasAleatorias
 } from '../controllers/piadaController.js';
 // 1. Importe o middleware
 import authMiddleware from '../middlewares/authMiddleware.js'; 
@@ -14,6 +15,8 @@ const router = Router();
 router.post('/piadas', submeterPiada);
 // Rota nova: GET /piadas
 router.get('/piadas', buscarPiadaAleatoria);
+
+router.get('/dezpiadas', buscarDezPiadasAleatorias);
 
 // Rotas de Admin (Por enquanto abertas)
 router.get('/piadas/pendentes', authMiddleware, listarPiadasPendentes);

@@ -50,6 +50,26 @@ export async function buscarPiadaAleatoria(req, res) {
     }
 }
 
+export async function buscarDezPiadasAleatorias(req, res) {
+    try {
+        const piada = await Piada.getDezPiadasAleatorias();
+
+        // Se não tiver nenhuma piada aprovada no banco, o retorno será undefined
+        if (!piada) {
+            return res.status(404).json(
+                {
+                    message: 'Ainda não temos piadas aprovadas. Cadastre uma!'
+                }
+            );
+        }
+
+        // Se achou, devolve a piada
+        res.json(piada);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar piada.' });
+    }
+}
+
 export async function listarPiadasPendentes(req, res) {
     try {
         const piadas = await Piada.getPiadasPendentes();
