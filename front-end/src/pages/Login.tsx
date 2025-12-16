@@ -4,8 +4,18 @@ import { useNavigate, Link } from 'react-router-dom'; // Para mudar de página
 
 import api from '../services/api.ts'; // Nossa conexão com o Backend
 
+import { useAuth } from '../context/AuthContext'; // <--- 1. Importe isso
+
 
 export function Login() {
+
+   // Variáveis para guardar o texto dos inputs
+  const [email, setEmail] = useState('teste@teste.com');
+  const [senha, setSenha] = useState('123');
+
+  const { login } = useAuth(); // <--- 2. Pegue a função do contexto
+  
+  const navigate = useNavigate(); // Função para redirecionar o usuário
 
   async function handleLogin(evento: React.FormEvent) {
     evento.preventDefault(); // Evita que a página recarregue (padrão do HTML)
@@ -22,7 +32,8 @@ export function Login() {
       
       // 3. Salvamos esse token no "Bolso" do navegador (LocalStorage)
       // Assim, se ele atualizar a página, continua logado.
-      localStorage.setItem('token', token);
+      // localStorage.setItem('token', token);
+      login(token); // O Contexto gerencia tudo!
 
       // 4. Redireciona para a página de Admin
       navigate('/admin');
@@ -32,12 +43,6 @@ export function Login() {
       console.error(erro);
     }
   }
-
-   // Variáveis para guardar o texto dos inputs
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  
-  const navigate = useNavigate(); // Função para redirecionar o usuário
 
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
