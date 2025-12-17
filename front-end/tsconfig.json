@@ -3,11 +3,13 @@
     "target": "ESNext",
     "module": "ESNext", // Mude de "CommonJS" ou similar para "ESNext"
     "moduleResolution": "bundler",
+    "types": ["vite/client"],
     "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "skipLibCheck": true,
     "strict": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable"]
-  }
+  },
+  "include": ["src", "src/**/*.ts", "src/**/*.tsx", "src/vite-env.d.ts"] // <--- Garanta que o arquivo está incluído
 }
