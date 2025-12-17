@@ -10,8 +10,8 @@ import { useAuth } from '../context/AuthContext'; // <--- 1. Importe isso
 export function Login() {
 
    // Variáveis para guardar o texto dos inputs
-  const [email, setEmail] = useState('teste@teste.com');
-  const [senha, setSenha] = useState('123');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
   const { login } = useAuth(); // <--- 2. Pegue a função do contexto
   
