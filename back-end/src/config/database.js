@@ -1,42 +1,19 @@
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
+import pg from 'pg';
+import dns from 'node:dns';
 
+// Força IPv4 para evitar erro de conexão local com Supabase
+dns.setDefaultResultOrder('ipv4first');
 
-// Função para abrir a conexão com o arquivo do banco
-export async function openDb() {
-  return open({
-    filename: './database.db', // O arquivo será criado na raiz
-    driver: sqlite3.Database
-  });
-}
+const { Pool } = pg;
 
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 
-// Função para criar a tabela se ela não existir
-export async function setupDatabase() {
-    const db = await openDb();
+// Exportamos o query para ser usado nos MODELS
+export const query = async (text, params) => {
+  return await db.query(text, params);
+};
 
-    await db.exec(`
-        CREATE TABLE IF NOT EXISTS piadas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            pergunta TEXT NOT NULL,
-            resposta TEXT NOT NULL,
-            aprovada INTEGER DEFAULT 0,
-            data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-    `);
-   
-    console.log('Banco de dados e Tabela Piadas prontos!');
-
-    await db.exec(`
-      CREATE TABLE IF NOT EXISTS usuarios (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          email TEXT UNIQUE NOT NULL,
-          senha TEXT NOT NULL
-      );
-    `);
-    
-    console.log('Tabela Usuários criada!');
-
-    // inserir um administrador inicialmente
-
-}
+export default db;

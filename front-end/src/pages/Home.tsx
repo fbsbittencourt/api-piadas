@@ -42,7 +42,7 @@ export function Home() {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 p-8 flex flex-col items-center">
       <nav className="w-full max-w-2xl flex justify-between mb-8">
-        <h1 className="text-2xl font-bold text-yellow-500">🤣 PiadasDev</h1>
+        <h1 className="text-2xl font-bold text-yellow-500">API - Piadas</h1>
         <Link to="/login" className="text-sm underline hover:text-yellow-500">Área Admin</Link>
       </nav>
 

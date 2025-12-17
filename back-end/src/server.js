@@ -5,12 +5,6 @@ import app from './app.js'; // Importação com .js
 import piadaRoutes from './routes/piadaRoutes.js'; // Importa as rotas
 import authRoutes from './routes/authRoutes.js';
 
-// Importa a função de configuração do banco
-import { setupDatabase } from './config/database.js';
-
-// Inicializa o banco de dados antes de tudo
-setupDatabase();
-
 const PORT = process.env.PORT;
 
 app.get('/', (req, resposta) => {  
@@ -27,6 +21,14 @@ app.use('/api', piadaRoutes);
 
 app.use('/api', authRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Servidor online na porta http://localhost:${PORT}/`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Servidor online na porta http://localhost:${PORT}/`);
+// });
+
+// Mantenha isto para testar localmente
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(process.env.PORT, () => console.log(`Servidor online na porta http://localhost:${process.env.PORT}/`));
+}
+
+// OBRIGATÓRIO: Exportar o app para a Vercel (serverless)
+export default app;

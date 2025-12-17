@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Cria uma instância do Axios com o endereço base
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api', // A porta do seu backend
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api', // A porta do seu backend
 });
 
 // Interceptador (Opcional, mas profissional):
