@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check, LogOut, UserPlus } from 'lucide-react';
+import { Check, LogOut, UserPlus, Trash } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
@@ -41,6 +41,18 @@ export function Admin() {
       alert('Piada aprovada com sucesso! Agora ela aparece na Home.');
     } catch (error) {
       alert('Erro ao aprovar. Verifique se você é admin.');
+    }
+  }
+
+  // --- FUNÇÃO DELETAR: Deletar Piada ---
+  async function deletar(id: number) {
+    if (!confirm('Tem certeza que deseja deletar esta piada?')) return;
+    try {
+      await api.delete(`/piadas/${id}`);
+      setPendentes(listaAtual => listaAtual.filter(piada => piada.id !== id));
+      alert('Piada deletada com sucesso!');
+    } catch (error) {
+      alert('Erro ao deletar piada.');
     }
   }
 
@@ -111,13 +123,22 @@ export function Admin() {
                   <p className="text-xs text-slate-500 mt-2">Enviado por: <span className="text-slate-400">{piada.autor || 'Anônimo'}</span></p>
                 </div>
 
-                <button
-                  onClick={() => aprovar(piada.id)}
-                  className="bg-green-600 hover:bg-green-500 text-white p-3 rounded-full shadow-lg hover:shadow-green-900/50 transition-all transform active:scale-95"
-                  title="Aprovar e Publicar"
-                >
-                  <Check size={24} />
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => deletar(piada.id)}
+                    className="bg-red-600 hover:bg-red-500 text-white p-3 rounded-full shadow-lg hover:shadow-red-900/50 transition-all transform active:scale-95"
+                    title="Deletar Piada"
+                  >
+                    <Trash size={24} />
+                  </button>
+                  <button
+                    onClick={() => aprovar(piada.id)}
+                    className="bg-green-600 hover:bg-green-500 text-white p-3 rounded-full shadow-lg hover:shadow-green-900/50 transition-all transform active:scale-95"
+                    title="Aprovar e Publicar"
+                  >
+                    <Check size={24} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

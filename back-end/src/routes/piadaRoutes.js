@@ -2,10 +2,10 @@ import { Router } from 'express';
 import {
     submeterPiada, buscarPiadaAleatoria,
     listarPiadasPendentes, aprovarPiada,
-    buscarDezPiadasAleatorias
+    buscarDezPiadasAleatorias, deletarPiada
 } from '../controllers/piadaController.js';
 // 1. Importe o middleware
-import authMiddleware from '../middlewares/authMiddleware.js'; 
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 
 const router = Router();
@@ -21,5 +21,6 @@ router.get('/dezpiadas', buscarDezPiadasAleatorias);
 // Rotas de Admin (Por enquanto abertas)
 router.get('/piadas/pendentes', authMiddleware, listarPiadasPendentes);
 router.put('/piadas/:id/aprovar', authMiddleware, aprovarPiada); // PUT indica atualização
+router.delete('/piadas/:id', authMiddleware, deletarPiada); // DELETE indica remoção
 
 export default router;

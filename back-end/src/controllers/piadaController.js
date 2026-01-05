@@ -58,3 +58,13 @@ export const aprovarPiada = async (req, res) => {
         res.status(500).json({ erro: 'Erro ao aprovar piada' });
     }
 };
+
+export const deletarPiada = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await Piada.deletar(id);
+        res.json({ mensagem: 'Piada deletada com sucesso!' });
+    } catch (erro) {
+        res.status(500).json({ erro: 'Erro ao deletar piada' });
+    }
+};

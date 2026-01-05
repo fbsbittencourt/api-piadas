@@ -33,6 +33,13 @@ class Piada {
             [id]
         );
     }
+    // Deleta uma piada pelo ID
+    static async deletar(id) {
+        await query(
+            'DELETE FROM piadas WHERE id = $1',
+            [id]
+        );
+    }
 }
 
 export default Piada;
