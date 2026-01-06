@@ -3,11 +3,13 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 
-import Snowfall from 'react-snowfall';
+
 
 import { AuthProvider, useAuth } from './context/AuthContext'; // <--- Importe o Provider
 import { ThemeProvider } from './context/ThemeContext';
 import { Admin } from './pages/Admin';
+
+import { SnowfallController } from './components/SnowfallController'; // <--- Nova Importação
 
 // --- O COMPONENTE PORTEIRO ATUALIZADO ---
 // Usamos React.ReactNode que é o padrão atual
@@ -26,8 +28,11 @@ function App() {
   return (
     // 1. BrowserRouter: O "Pai" que monitora a URL do navegador
     <BrowserRouter>
-      <Snowfall color="white" />
+      {/* Removemos o Snowfall daqui de cima */}
       <ThemeProvider>
+        {/* Adicionamos o Controller aqui DENTRO do provider para ele saber o tema */}
+        <SnowfallController />
+
         <AuthProvider>
           {/* 2. Routes: Uma lista de regras. Ele escolhe APENAS UMA por vez. */}
           <Routes>
@@ -55,7 +60,7 @@ function App() {
           </Routes>
         </AuthProvider>
       </ThemeProvider>
-    </BrowserRouter >
+    </BrowserRouter>
   );
 }
 
