@@ -73,8 +73,10 @@ export function Admin() {
 
   // --- FUNÇÃO 4: Sair ---
   function handleLogout() {
-    logout();
     navigate('/');
+    // Pequeno delay para garantir que a navegação ocorra ANTES do estado mudar
+    // e o componente RotaProtegida não nos jogue para o Login
+    setTimeout(() => logout(), 50);
   }
 
   // Carrega as piadas assim que a tela abre
