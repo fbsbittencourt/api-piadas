@@ -21,7 +21,7 @@ class Piada {
     // Lista todas as pendentes
     static async listarPendentes() {
         const resultado = await query(
-            'SELECT * FROM piadas WHERE aprovada = false'
+            'SELECT * FROM piadas WHERE aprovada = false ORDER BY id DESC'
         );
         return resultado.rows;
     }
